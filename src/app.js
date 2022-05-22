@@ -6,6 +6,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const squares = [];
     let score = 0;
 
+    // const candyColors = [
+    //     'red',
+    //     'yellow',
+    //     'orange',
+    //     'purple',
+    //     'green',
+    //     'blue-candy'
+    // ];
+
     const candyColors = [
         'url(src/images/red-candy.png)',
         'url(src/images/yellow-candy.png)',
@@ -17,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Generate the game board
     function createBoard() {
-        for (let i = 0; i < width ** 2; i++) {
+        for (let i = 0; i < width * width; i++) {
             const square = document.createElement('div');
             square.setAttribute('draggable', true);
             square.setAttribute('id', i);
@@ -107,7 +116,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const isBlank = squares[i].style.backgroundImage === '';
 
             const notValid = [5, 6, 7, 13, 14, 15, 21, 22, 23, 29, 30, 31, 37, 38, 39, 45, 46, 47, 53, 54, 55];
-            if (notValid.includes(i)) continue;
+            if (notValid.includes(i)) {
+                continue;
+            }
 
             if (rowOfFour.every(index => squares[index].style.backgroundImage === decidedColor && !isBlank)) {
                 score += 4;
@@ -118,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
-    //checkRowForFour();
+    checkRowForFour();
 
     // for column of Four candy
     function checkColumnForFour() {
@@ -136,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
-    //checkColumnForFour();
+    checkColumnForFour();
 
     // for row of Three candy
     function checkRowForThree() {
@@ -146,7 +157,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const isBlank = squares[i].style.backgroundImage === '';
 
             const notValid = [6, 7, 14, 15, 22, 23, 30, 31, 38, 39, 46, 47, 54, 55];
-            if (notValid.includes(i)) continue;
+            if (notValid.includes(i)) {
+                continue;
+            }
 
             if (rowOfThree.every(index => squares[index].style.backgroundImage === decidedColor && !isBlank)) {
                 score += 3;
@@ -157,9 +170,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
-    //checkRowForThree();
+    checkRowForThree();
 
-    //for column of Three
+    //for column of Three candy
     function checkColumnForThree() {
         for (i = 0; i < 47; i++) {
             let columnOfThree = [i, i + width, i + width * 2];
@@ -175,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
-    //checkColumnForThree();
+    checkColumnForThree();
 
     // Checks carried out indefintely automatically
     window.setInterval(function () {
@@ -184,7 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
         checkRowForThree();
         checkColumnForThree();
         moveIntoSquareBelow();
-    }, 200);
+    }, 100);
 
     // end of the app.js file
 });
